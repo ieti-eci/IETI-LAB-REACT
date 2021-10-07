@@ -1,7 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
 import { TaskItem } from "./TaskItem";
+import { useState } from "react";
 function App() {
+
+  const [tasks, setTasks]  = useState ([
+    {
+      isCompleted:true,
+      name: "Learn React on Class",  
+    },
+    {
+      isCompleted:true,
+      name: "Learn Hocks",  
+    },
+    {
+      isCompleted:true,
+      name: "Keep on Keeping on",  
+    }
+  ]);
+
+  const handleTaskChange = (index) => () =>{
+    console.log("changed! "+ index);
+    const arr = [...tasks];
+    arr[index].isCompleted = !arr[index].isCompleted
+    setTasks(arr);
+  };
+
   return (
     <nain>
       <form>
@@ -9,9 +33,15 @@ function App() {
         <button>Creat Task</button>
       </form>
       <ul>
-        <TaskItem isChecked={true} taskName="Learn React" />
-        <TaskItem isChecked={true} taskName="Learn Hocks" />
-        <TaskItem isChecked={true} taskName="Keep on Keeping on" />
+        {tasks.map((task, index) => {
+          return (
+            <TaskItem 
+            isChecked={task.isCompleted} 
+            taskName={task.name}  
+            onTaskChange={handleTaskChange(index)}
+            />
+          );      
+        })}
       </ul>
     </nain>
 
